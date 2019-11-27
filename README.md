@@ -27,9 +27,9 @@ sudo raspi-config
 
 -change HOSTNAME
 
-sudo /boot/cmdline.txt
+sudo vi /boot/cmdline.txt
 
--cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory
+cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory
 
 sudo reboot
 
