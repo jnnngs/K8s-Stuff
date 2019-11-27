@@ -22,20 +22,27 @@ Worker node steps...
 passwd
 
 sudo raspi-config
+
 -set memory to 16
+
 -change HOSTNAME
 
 sudo /boot/cmdline.txt
+
 -cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory
 
 sudo reboot
 
 On Master
+
 ssh-copy-id pi@raspberrypiIP
+
 -ssh-keygen, if it needs creating
 
 Install K3SUP
+
 curl -sLS https://get.k3sup.dev | sh
 
 Join worker node
+
 k3sup join --ip WORKER_IP --server-ip MASTER_IP --user pi
