@@ -19,6 +19,13 @@ ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "192.168.1.XX"
 ---
 KS3UP
 /////
+Master steps
+
+k3sup install --ip 192.168.1.XX --user pi
+
+sudo kubectl get nodes
+
+/////
 Worker node steps...
 
 passwd
@@ -52,3 +59,5 @@ k3sup join --ip WORKER_IP --server-ip MASTER_IP --user pi
 Check node added
 
 sudo kubectl get nodes
+
+
