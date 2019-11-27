@@ -1,5 +1,7 @@
 # K8s-Stuff
 
+https://blog.nobugware.com/post/2019/k3s-on-arm64/
+
 pkill -9 k3s
 
 /usr/local/bin/k3s-uninstall.sh
