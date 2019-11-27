@@ -46,3 +46,7 @@ curl -sLS https://get.k3sup.dev | sh
 Join worker node
 
 k3sup join --ip WORKER_IP --server-ip MASTER_IP --user pi
+
+Check node added
+
+sudo kubectl get nodes
