@@ -2,6 +2,8 @@
 
 https://blog.nobugware.com/post/2019/k3s-on-arm64/
 
+https://github.com/rancher/k3s/issues/233
+
 pkill -9 k3s
 
 /usr/local/bin/k3s-uninstall.sh
