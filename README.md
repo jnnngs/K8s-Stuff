@@ -14,6 +14,8 @@ curl -sfL https://get.k3s.io | sh -
 
 sudo k3s agent --server ${K3S_URL} --token ${K3S_TOKEN}
 
+ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "192.168.1.XX"
+
 ---
 KS3UP
 /////
