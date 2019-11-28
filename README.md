@@ -28,6 +28,7 @@ KS3UP
 Master steps
 
 Install K3SUP
+
 curl -sLS https://get.k3sup.dev | sh
 
 k3sup install --ip 192.168.1.XX --user pi
