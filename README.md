@@ -6,6 +6,8 @@ https://github.com/rancher/k3s/issues/233
 
 https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
 
+https://itnext.io/edge-focused-compact-kubernetes-with-micropaas-%CE%BCpaas-k3s-k3os-and-rio-6f7d758e19f1
+
 pkill -9 k3s
 
 /usr/local/bin/k3s-uninstall.sh
