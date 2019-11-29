@@ -10,6 +10,8 @@ https://itnext.io/edge-focused-compact-kubernetes-with-micropaas-%CE%BCpaas-k3s-
 
 https://habd.as/post/git-based-continuous-delivery-rio/
 
+https://www.linode.com/docs/kubernetes/deploy-container-image-to-kubernetes/
+
 pkill -9 k3s
 
 /usr/local/bin/k3s-uninstall.sh
