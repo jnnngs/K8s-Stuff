@@ -76,4 +76,7 @@ Check node added
 
 sudo kubectl get nodes
 
+//Install Desktop
+sudo apt-get install raspberrypi-ui-mods
 
+sudo apt-get install xrdp
