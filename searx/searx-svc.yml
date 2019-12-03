@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: searx-svc
+  labels:
+    app: searx
+spec:
+  type: NodePort
+  ports:
+  #outside cluster port (internet)
+  - port: 8181 
+  #node port connections
+    nodePort: 30001
+  #container exposed port (docker file)
+    targetPort: 8888
+    protocol: TCP
+  selector:
+    app: searx
+    version: "1.0"
+    colour: "blue"
+  type: LoadBalancer

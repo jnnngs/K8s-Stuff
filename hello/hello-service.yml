@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-svc
+  labels:
+    app: hello-world
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    nodePort: 30001
+    protocol: TCP
+  selector:
+    app: hello-world
+    version: "1.3"
+    colour: "blue"
+  type: LoadBalancer
+  externalIPs:
+  - 51.38.71.174

@@ -1,0 +1,23 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: searx-blue
+spec:
+  replicas: 3
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: searx
+        version: "1.0"
+        colour: "blue"
+    spec:
+      containers:
+      - name: searx-pod
+        image: wonderfall/searx:latest
+        ports:
+        - containerPort: 30001

@@ -1,0 +1,23 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: hello-blue
+spec:
+  replicas: 3
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: hello-world
+        version: "1.3"
+        colour: "blue"
+    spec:
+      containers:
+      - name: hello-pod
+        image: neggs/helloworld:latest
+        ports:
+        - containerPort: 8080

@@ -1,0 +1,96 @@
+K8s Best Practice Run Book
+--------------------------
+Tech Info:
+Master: 51.38.71.174 / ubuntu 1604 / 1 Core / 2GB - vps663905
+Node 0: 51.38.80.104 / ubuntu 1604 / 1 Core / 2GB - vps663906
+Node 1: 51.38.71.191 / ubuntu 1604 / 1 Core / 2GB - vps663907
+
+yml files:
+hello-blue.yml - BLUE release
+hello-green.yml - GREEN release
+hello-service.yml - K8s SERVICE
+
+CREATE Service:
+
+-create deplyment
+vi hello-blue.yml, update template:metadata:labels to correct version
+kubectl get pods, check no pods runnings
+kubectl create -f hello-blue.yml --record=true, create deployment pods
+kubectl get pods, check pods are running
+
+-create service
+vi hello-service.yml, change LABELS to point to correct deployment
+i.e.
+  labels:
+    app: hello-world
+    version: "1.X"
+    colour: "blue"
+kubectl create -f hello-service.yml --record=true, create service
+kubectl describe service, check service looks fine
+http://51.38.71.174/ , check deployed correct version/release
+
+UPDATE Service:
+
+-update service with new release
+change runner.sh on github to new PODRELEASE version and colour
+wait for docker hub to re-build image
+vi hello-green.yml, update template:metadata:labels to new version
+kubectl get pods, check blue pods runnings
+kubectl create -f hello-green.yml --record=true,, create deployment pods
+kubectl get pods, check blue and green pods are running
+vi hello-service.yml, change LABELS to point to new green deployment
+i.e.
+  selector:
+    app: hello-world
+    version: "1.X"
+    colour: "green"
+kubectl apply -f hello-service.yml --record=true, apply service changes
+kubectl describe service, check service looks fine and is point to new release
+http://51.38.71.174/ , check deployed correct version/release - keep refreshing until all pods are green
+
+-rollback
+in order to rollback...
+vi hello-service.yml, change LABELS to point to previous blue deployment
+i.e.
+  selector::
+    app: hello-world
+    version: "1.X"
+    colour: "blue"
+kubectl apply -f hello-service.yml, apply service changes
+kubectl describe service, check service looks fine and is point to previous release
+http://51.38.71.174/ , check deployed correct version/release - keep refreshing until all pods are blue again
+when rollback tested, clean up
+clean-up failed green deployment
+kubectl delete -f hello-green.yml, delete green deployment pods
+
+-if not rolling back
+clean-up previous blue deployment
+kubectl delete -f hello-blue.yml, delete blue deployment pods
+
+
+EXTERNAL_IP=$(kubectl get svc hello-svc -o jsonpath="{.spec.externalIPs[*]}")
+
+while true; do curl -s http://$EXTERNAL_IP | grep Container; sleep 0.5; done
+
+bash -c 
+'external_ip=""; 
+while [ -z $external_ip ]; do 
+	echo "Waiting for end point..."; 
+	external_ip=$(kubectl get svc hello-svc -o jsonpath="{.spec.externalIPs[*]}");
+	[ -z "$external_ip" ]
+	&& sleep 10; 
+done; 
+echo "End point ready."
+&& echo $external_ip;
+selectorapp=$(kubectl get svc hello-svc -o jsonpath="{.selector.app[*]}");
+selectorcolour=$(kubectl get svc hello-svc -o jsonpath="{.selector.colour[*]}");
+selectorversion=$(kubectl get svc hello-svc -o jsonpath="{.selector.version[*]}");
+echo $selectorapp . ", " 
+&& echo $selectorcolour . , " 
+&& echo $selectorversion 
+&& export endpoint=$external_ip'
+
+bash -c 'external_ip=""; while [ -z $external_ip ]; do echo "Waiting for end point..."; external_ip=$(kubectl get svc hello-svc -o jsonpath="{.spec.externalIPs[*]}"); [ -z "$external_ip" ] && sleep 10; done; metadata=$(kubectl get svc hello-svc -o jsonpath="{.metadata.annotations}");
+echo "End point read." && echo $external_ip && echo $metadata; export endpoint=$external_ip'
+
+
