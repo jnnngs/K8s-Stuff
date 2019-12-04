@@ -7,7 +7,6 @@ spec:
   minReadySeconds: 10
   strategy: 
     matchLabels:
-    app: hello-world
     type: RollingUpdate
     rollingUpdate:
       maxUnavailable: 1
