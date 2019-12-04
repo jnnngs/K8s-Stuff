@@ -6,6 +6,7 @@ spec:
   replicas: 3
   minReadySeconds: 10
   strategy: 
+    selector:
     matchLabels:
     type: RollingUpdate
     rollingUpdate:
