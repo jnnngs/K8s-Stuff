@@ -21,7 +21,7 @@ spec:
         colour: "blue" 
     spec:
       containers:
-      - name: hello-pod
+      - name: hello-blue
         image: neggs/helloworld:latest 
         ports: 
         - containerPort: 8080
