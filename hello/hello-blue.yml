@@ -4,9 +4,11 @@ metadata:
   name: hello-blue
 spec:
   replicas: 3
+  selector:
+    matchLabels:
+      name: hello-blue
   minReadySeconds: 10
   strategy: 
-    selector:
     matchLabels:
     type: RollingUpdate
     rollingUpdate:
